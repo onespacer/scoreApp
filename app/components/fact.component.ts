@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {AnalysisService} from '../services/analysis.service';
+import {UtilityService} from '../services/utility.service';
 
 @Component({
   selector: 'fact',
@@ -56,19 +57,24 @@ import {AnalysisService} from '../services/analysis.service';
                 </table>
             </div>
             `,
-            providers: [AnalysisService]
+            providers: [AnalysisService, UtilityService]
 })
 
 export class FactComponent  { 
     facts: fact[];
     analyzedResponses: analyzedResponse[];
     analysisService: AnalysisService;
+    utilityService:UtilityService;
 
-    constructor(private anaService: AnalysisService){
+    constructor(private anaService: AnalysisService, private utilService:UtilityService){
         this.facts = [];
         this.analysisService = anaService;
+        this.utilityService = utilService;
         this.analyzedResponses = [];
+        this.utilityService.savetoDB();
+        console.log("saved to db");
     }
+
 
     addFact(factText:string, source:string, target:string){
         console.log(target);
